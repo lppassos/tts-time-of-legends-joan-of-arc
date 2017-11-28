@@ -1,0 +1,91 @@
+
+-- Dice Result Tables with the results for each of the faces
+yellowTable = { "shield", "blank", "push", "push", "blank", "disrupt" }
+redTable    = { "disrupt", "wound", "shield", "push", "wound", "disrupt" }
+whiteTable  = { "disrupt", "wound", "shield", "push", "wound", "disrupt" }
+blackTable  = { "disrupt", "wound", "shield", "push", "wound", "disrupt" }
+purpleTable = { "disrupt", "wound", "shield", "push", "wound", "disrupt" }
+
+function onLoad()
+    -- Create the button where the results will be shown
+    self.createButton({
+            label="",
+            click_function="none",
+            function_owner=self,
+            position={0, 0, 10},
+            rotation={0, 90, 0},
+            height=0,
+            width=0,
+            font_color={1,1,1},
+            font_size=500
+        })
+
+    -- Start the timer to count the results
+    Timer.create({
+            identifier=self.getGUID().."_timer",
+            function_name="findDiceInBox",
+            function_owner=self,
+            repetitions=0,
+            delay=1
+        })
+end
+
+
+-- Search and report on all results of dice in the dice tray so that
+-- it makes it easier to check the fights
+function findDiceInBox()
+    local scale = self.getScale()
+    local position = self.getPosition()
+
+    -- Collect all Objects inside the box
+    local allObj = Physics.cast( {
+            origin = position,
+            direction = {0,1,0},
+            type = 3,
+            max_distance = 0,
+            size = {12*scale.x, 1*scale.y, 10*scale.z},
+            -- debug=true
+        })
+
+    local results = {
+            ["shield"]=0,
+            ["blank"]=0,
+            ["wound"]=0,
+            ["disrupt"]=0,
+            ["claw"]=0,
+            ["push"]=0
+        }
+    local valueTable=nil
+    local diceValue=nil
+    for _, entry in ipairs(allObj) do
+
+        if entry.hit_object ~= self then
+            local objContent = entry.hit_object
+
+            -- Checking if it's a known die
+            if     objContent.getName() == "Yellow Die" then valueTable = yellowTable
+            elseif objContent.getName() == "Red Die" then valueTable = redTable
+            elseif objCOntent.getName() == "White Die" then valueTable = whiteTable
+            elseif objContent.getName() == "Black Die" then valueTable = blackTable
+            elseif objContent.getName() == "Purple Die" then valueTable = purpleTable
+            end
+
+            if valueTable ~= nil then
+                diceValue=objContent.getValue()
+                results[valueTable[diceValue]]=results[valueTable[diceValue]]+1
+                valueTable = nil
+            end
+        end
+    end
+
+    local label = ""
+    for name, total in pairs(results) do
+        if total ~= 0  then
+            label = label..name..": "..total.."\n"
+        end
+    end
+    self.editButton({
+            index=0,
+            label=label
+        })
+end
