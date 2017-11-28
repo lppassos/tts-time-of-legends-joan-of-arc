@@ -2,9 +2,9 @@
 -- Dice Result Tables with the results for each of the faces
 yellowTable = { "shield", "blank", "push", "push", "blank", "disrupt" }
 redTable    = { "disrupt", "wound", "shield", "push", "wound", "disrupt" }
-whiteTable  = { "disrupt", "wound", "shield", "push", "wound", "disrupt" }
-blackTable  = { "disrupt", "wound", "shield", "push", "wound", "disrupt" }
-purpleTable = { "disrupt", "wound", "shield", "push", "wound", "disrupt" }
+whiteTable  = { "disrupt", "shield", "blank", "push", "shield", "disrupt" }
+blackTable  = { "disrupt", "shield", "shield", "wound", "shield", "disrupt" }
+purpleTable = { "disrupt", "claw", "push", "wound", "claw", "disrupt" }
 
 function onLoad()
     -- Create the button where the results will be shown
