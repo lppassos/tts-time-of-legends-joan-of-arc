@@ -93,7 +93,7 @@ local scenario = {
     troops = {
       { unit="Joan of Arc",          qty=1, locations = { { x=  -2, y=2 } } },
       { unit="Bertrand de Poulengy", qty=1, locations = { { x=-2.2, y=2 } } },
-      { unit="Jean de Metz",         qty=1, locations = { { x=-1-8, y=2 } } },
+      { unit="Jean de Metz",         qty=1, locations = { { x=-1.8, y=2 } } },
       { unit="Peasants",             qty=6 },
     },
     start={
